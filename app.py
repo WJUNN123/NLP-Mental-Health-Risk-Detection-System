@@ -38,7 +38,7 @@ if st.button("Analyze", type="primary"):
             # Step 1: Preprocess
             clean_text = preprocess(user_input)
 
-            # Step 2: Classify
+            # Step 2: Classify with HuggingFace model
             result = classify(clean_text)
             label = result["label"]
             confidence = result["confidence"]
@@ -54,7 +54,10 @@ if st.button("Analyze", type="primary"):
         st.divider()
 
         # Risk Level
-        st.markdown(f"### Prediction: <span style='color:{risk_info['color']}'>{risk_info['label']}</span>", unsafe_allow_html=True)
+        st.markdown(
+            f"### Prediction: <span style='color:{risk_info['color']}'>{risk_info['label']}</span>",
+            unsafe_allow_html=True
+        )
 
         # Confidence
         st.markdown(f"**Confidence:** {confidence * 100:.1f}%")
