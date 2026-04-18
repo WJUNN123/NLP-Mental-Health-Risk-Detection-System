@@ -1,16 +1,12 @@
 # config.py - All constants and configuration
 
 # HuggingFace Model
-# KevSun/mentalhealth_LM: public BERT model, labels 0-5 (0=minimal, 5=severe)
-HF_MODEL = "KevSun/mentalhealth_LM"
+# paulagarciaserrano/roberta-depression-detection
+# Labels: "not depression", "moderate", "severe"
+HF_MODEL = "paulagarciaserrano/roberta-depression-detection"
 
 # Gemini Model
 GEMINI_MODEL = "gemini-2.5-flash"
-
-# Risk Thresholds based on severity score (0-5)
-# 0-1 -> LOW, 2-3 -> MEDIUM, 4-5 -> HIGH
-LOW_MAX = 1
-MEDIUM_MAX = 3
 
 # Risk Level Display Config
 RISK_CONFIG = {
