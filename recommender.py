@@ -1,5 +1,5 @@
 # recommender.py - Generate advice using Gemini
-
+ 
 from google import genai
 import streamlit as st
  
@@ -25,7 +25,6 @@ def get_recommendation(text: str, risk_level: str, confidence: float) -> str:
         return response.text.strip()
  
     except Exception as e:
-        # Print full error to Streamlit logs for debugging
-        import traceback
-        traceback.print_exc()
-        return f"⚠️ Error: {str(e)}"
+        if "429" in str(e) or "quota" in str(e).lower():
+            return "⚠️ Gemini API quota exceeded. Please try again later."
+        return f"⚠️ Could not generate recommendation. Please try again."
