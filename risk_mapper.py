@@ -1,23 +1,26 @@
 # risk_mapper.py - Map classifier output to risk level
 
-from config import MEDIUM_THRESHOLD
+from config import LOW_MAX, MEDIUM_MAX
 
 
 def map_risk(label: str, confidence: float) -> str:
     """
-    Map model label + confidence to a risk tier.
+    Map model label to risk tier.
 
-    mental/mental-roberta-base labels:
-    - 'normal'    -> LOW
-    - 'depression', 'anxiety', 'suicidal', 'stress', 'bipolar', 'personality disorder'
-      + confidence < 0.70  -> MEDIUM
-      + confidence >= 0.70 -> HIGH
+    KevSun/mentalhealth_LM labels are severity scores 0-5:
+    - 0-1 -> LOW
+    - 2-3 -> MEDIUM
+    - 4-5 -> HIGH
     """
-    label_lower = label.lower()
+    try:
+        severity = int(label)
+    except (ValueError, TypeError):
+        # Fallback if label is not numeric
+        severity = 3
 
-    if label_lower == "normal":
+    if severity <= LOW_MAX:
         return "LOW"
-    elif confidence >= MEDIUM_THRESHOLD:
-        return "HIGH"
-    else:
+    elif severity <= MEDIUM_MAX:
         return "MEDIUM"
+    else:
+        return "HIGH"
