@@ -1,16 +1,16 @@
 # config.py - All constants and configuration
 
 # HuggingFace Model
-HF_MODEL = "mental/mental-roberta-base"
+# KevSun/mentalhealth_LM: public BERT model, labels 0-5 (0=minimal, 5=severe)
+HF_MODEL = "KevSun/mentalhealth_LM"
 
 # Gemini Model
 GEMINI_MODEL = "gemini-2.5-flash"
 
-# Risk Thresholds (based on offensive confidence score)
-# If label is "not-offensive" -> LOW RISK
-# If label is "offensive" and confidence < 0.70 -> MEDIUM RISK
-# If label is "offensive" and confidence >= 0.70 -> HIGH RISK
-MEDIUM_THRESHOLD = 0.70
+# Risk Thresholds based on severity score (0-5)
+# 0-1 -> LOW, 2-3 -> MEDIUM, 4-5 -> HIGH
+LOW_MAX = 1
+MEDIUM_MAX = 3
 
 # Risk Level Display Config
 RISK_CONFIG = {
