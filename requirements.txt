@@ -1,0 +1,5 @@
+streamlit
+transformers
+torch
+google-generativeai
+scipy
