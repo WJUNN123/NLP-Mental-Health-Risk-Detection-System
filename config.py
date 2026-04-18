@@ -1,7 +1,7 @@
 # config.py - All constants and configuration
 
 # HuggingFace Model
-HF_MODEL = "cardiffnlp/twitter-roberta-base-offensive"
+HF_MODEL = "mental/mental-roberta-base"
 
 # Gemini Model
 GEMINI_MODEL = "gemini-2.5-flash"
