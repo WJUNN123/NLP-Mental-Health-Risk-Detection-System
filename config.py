@@ -4,7 +4,7 @@
 HF_MODEL = "cardiffnlp/twitter-roberta-base-offensive"
 
 # Gemini Model
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-1.5-flash-latest"
 
 # Risk Thresholds (based on offensive confidence score)
 # If label is "not-offensive" -> LOW RISK
