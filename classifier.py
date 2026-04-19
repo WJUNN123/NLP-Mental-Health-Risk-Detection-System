@@ -33,6 +33,10 @@ def classify(text: str) -> dict:
     top_idx = probs.argmax().item()
     id2label = model.config.id2label
 
+    # Debug: print all labels and scores to Streamlit
+    all_labels = {id2label[i]: round(probs[i].item(), 4) for i in range(len(probs))}
+    st.caption(f"🔍 Debug — Raw model output: {all_labels}")
+
     return {
         "label": id2label[top_idx],
         "confidence": probs[top_idx].item()
