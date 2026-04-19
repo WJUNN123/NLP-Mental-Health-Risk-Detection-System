@@ -1,7 +1,9 @@
 # config.py - All constants and configuration
 
-# HuggingFace Model (called via Inference API)
-HF_MODEL = "mental/mental-roberta-base"
+# HuggingFace Model (via Inference API)
+# Elite13/bert-finetuned-mental-health
+# Labels: Anxiety, Depression, Bipolar, Normal, Personality Disorder, Stress, Suicidal
+HF_MODEL = "Elite13/bert-finetuned-mental-health"
 
 # Gemini Model
 GEMINI_MODEL = "gemini-2.5-flash"
