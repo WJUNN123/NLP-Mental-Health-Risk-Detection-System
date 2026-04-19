@@ -2,22 +2,22 @@
 
 def map_risk(label: str, confidence: float) -> str:
     """
-    Map mental/mental-roberta-base labels to risk tier.
+    Map Elite13/bert-finetuned-mental-health labels to risk tier.
 
-    Labels: normal, depression, anxiety, bipolar, stress,
-            personality disorder, suicidal
+    Labels: Normal, Anxiety, Stress, Depression, Bipolar,
+            Personality Disorder, Suicidal
 
     Mapping:
-    - normal                          -> LOW
-    - stress, anxiety                 -> MEDIUM
-    - depression, bipolar,
-      personality disorder, suicidal  -> HIGH
+    - Normal                              -> LOW
+    - Anxiety, Stress                     -> MEDIUM
+    - Depression, Bipolar,
+      Personality Disorder, Suicidal      -> HIGH
     """
     label_lower = label.lower()
 
     if label_lower == "normal":
         return "LOW"
-    elif label_lower in ("stress", "anxiety"):
+    elif label_lower in ("anxiety", "stress"):
         return "MEDIUM"
     else:
         return "HIGH"
