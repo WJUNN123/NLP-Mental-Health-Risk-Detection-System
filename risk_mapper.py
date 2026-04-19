@@ -1,21 +1,31 @@
 # risk_mapper.py - Map classifier output to risk level
 
-def map_risk(label: str, confidence: float) -> str:
+# ourafla/mental-health-bert-finetuned label mapping:
+# LABEL_0 = Anxiety
+# LABEL_1 = Depression
+# LABEL_2 = Normal
+# LABEL_3 = Suicidal
+
+LABEL_MAP = {
+    "LABEL_0": "Anxiety",
+    "LABEL_1": "Depression",
+    "LABEL_2": "Normal",
+    "LABEL_3": "Suicidal"
+}
+
+RISK_MAP = {
+    "Normal":     "LOW",
+    "Anxiety":    "MEDIUM",
+    "Depression": "HIGH",
+    "Suicidal":   "HIGH"
+}
+
+
+def map_risk(label: str, confidence: float) -> tuple:
     """
-    Map ourafla/mental-health-bert-finetuned labels to risk tier.
-
-    Labels: Normal, Anxiety, Depression, Suicidal
-
-    Mapping:
-    - Normal     -> LOW
-    - Anxiety    -> MEDIUM
-    - Depression, Suicidal -> HIGH
+    Translate raw LABEL_X to a human name and risk tier.
+    Returns (condition_name, risk_level).
     """
-    label_lower = label.lower()
-
-    if label_lower == "normal":
-        return "LOW"
-    elif label_lower == "anxiety":
-        return "MEDIUM"
-    else:
-        return "HIGH"
+    condition = LABEL_MAP.get(label, label)
+    risk_level = RISK_MAP.get(condition, "HIGH")
+    return condition, risk_level
