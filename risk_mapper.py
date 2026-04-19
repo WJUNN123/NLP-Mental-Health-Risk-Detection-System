@@ -2,18 +2,22 @@
 
 def map_risk(label: str, confidence: float) -> str:
     """
-    Map model label to risk tier.
+    Map mental/mental-roberta-base labels to risk tier.
 
-    paulagarciaserrano/roberta-depression-detection labels:
-    - "not depression" -> LOW
-    - "moderate"       -> MEDIUM
-    - "severe"         -> HIGH
+    Labels: normal, depression, anxiety, bipolar, stress,
+            personality disorder, suicidal
+
+    Mapping:
+    - normal                          -> LOW
+    - stress, anxiety                 -> MEDIUM
+    - depression, bipolar,
+      personality disorder, suicidal  -> HIGH
     """
     label_lower = label.lower()
 
-    if "not" in label_lower:
+    if label_lower == "normal":
         return "LOW"
-    elif "moderate" in label_lower:
+    elif label_lower in ("stress", "anxiety"):
         return "MEDIUM"
     else:
         return "HIGH"
