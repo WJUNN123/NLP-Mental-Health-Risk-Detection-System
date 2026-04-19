@@ -20,7 +20,7 @@ def load_model():
 def classify(text: str) -> dict:
     """
     Run inference on the input text.
-    Returns a dict with the top label and its confidence score.
+    Returns a dict with the raw label and confidence score.
     """
     tokenizer, model = load_model()
 
@@ -33,11 +33,7 @@ def classify(text: str) -> dict:
     top_idx = probs.argmax().item()
     id2label = model.config.id2label
 
-    # Debug: print all labels and scores to Streamlit
-    all_labels = {id2label[i]: round(probs[i].item(), 4) for i in range(len(probs))}
-    st.caption(f"🔍 Debug — Raw model output: {all_labels}")
-
     return {
-        "label": id2label[top_idx],
+        "label": id2label[top_idx],       # e.g. LABEL_0, LABEL_1, LABEL_2, LABEL_3
         "confidence": probs[top_idx].item()
     }
