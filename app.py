@@ -8,25 +8,21 @@ from risk_mapper import map_risk
 from recommender import get_recommendation
 from config import RISK_CONFIG
 
-# ── Page Config ──────────────────────────────────────────────
 st.set_page_config(
     page_title="Mental Health Risk Analyzer",
     page_icon="🧠",
     layout="centered"
 )
 
-# ── Title ─────────────────────────────────────────────────────
 st.title("🧠 Mental Health Risk Analysis")
 st.write("Enter a text below to analyze its mental health risk level.")
 
-# ── Input ─────────────────────────────────────────────────────
 user_input = st.text_area(
     label="Your Text",
     placeholder="Type or paste your text here...",
     height=150
 )
 
-# ── Analyze Button ────────────────────────────────────────────
 if st.button("Analyze", type="primary"):
 
     if not user_input.strip():
@@ -34,40 +30,38 @@ if st.button("Analyze", type="primary"):
 
     else:
         with st.spinner("Analyzing..."):
+            try:
+                # Step 1: Preprocess
+                clean_text = preprocess(user_input)
 
-            # Step 1: Preprocess
-            clean_text = preprocess(user_input)
+                # Step 2: Classify
+                result = classify(clean_text)
+                label = result["label"]
+                confidence = result["confidence"]
 
-            # Step 2: Classify with HuggingFace model
-            result = classify(clean_text)
-            label = result["label"]
-            confidence = result["confidence"]
+                # Step 3: Map to condition name + risk tier
+                condition, risk_level = map_risk(label, confidence)
+                risk_info = RISK_CONFIG[risk_level]
 
-            # Step 3: Map to risk tier
-            risk_level = map_risk(label, confidence)
-            risk_info = RISK_CONFIG[risk_level]
+                # Step 4: Gemini recommendation
+                recommendation = get_recommendation(clean_text, risk_level, confidence)
 
-            # Step 4: Get Gemini recommendation
-            recommendation = get_recommendation(clean_text, risk_level, confidence)
+                # ── Display Results ───────────────────────────────────
+                st.divider()
 
-        # ── Display Results ───────────────────────────────────
-        st.divider()
+                st.markdown(
+                    f"### Prediction: <span style='color:{risk_info['color']}'>{risk_info['label']}</span>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(f"**Detected Condition:** {condition}")
+                st.markdown(f"**Confidence:** {confidence * 100:.1f}%")
+                st.progress(confidence)
+                st.caption(risk_info["description"])
 
-        # Risk Level
-        st.markdown(
-            f"### Prediction: <span style='color:{risk_info['color']}'>{risk_info['label']}</span>",
-            unsafe_allow_html=True
-        )
+                st.divider()
 
-        # Confidence
-        st.markdown(f"**Confidence:** {confidence * 100:.1f}%")
-        st.progress(confidence)
+                st.markdown("### 📌 Recommendation")
+                st.info(recommendation)
 
-        # Description
-        st.caption(risk_info["description"])
-
-        st.divider()
-
-        # Recommendation
-        st.markdown("### 📌 Recommendation")
-        st.info(recommendation)
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
