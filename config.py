@@ -1,9 +1,7 @@
 # config.py - All constants and configuration
 
-# HuggingFace Model
-# paulagarciaserrano/roberta-depression-detection
-# Labels: "not depression", "moderate", "severe"
-HF_MODEL = "paulagarciaserrano/roberta-depression-detection"
+# HuggingFace Model (called via Inference API)
+HF_MODEL = "mental/mental-roberta-base"
 
 # Gemini Model
 GEMINI_MODEL = "gemini-2.5-flash"
